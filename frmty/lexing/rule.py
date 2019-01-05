@@ -1,10 +1,12 @@
 import re
 from typing import Match, Optional
 
+from .token_type import TokenType
+
 
 class Rule:
-    def __init__(self, name: str, pattern: str, flags: int):
-        self.name = name
+    def __init__(self, token_type: TokenType, pattern: str, flags: int):
+        self.token_type = token_type
         self.regex = re.compile(pattern, flags=flags)
 
     def matches(self, source: str, start: int) -> Optional[Match[str]]:
