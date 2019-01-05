@@ -19,17 +19,19 @@ def configure_lexer(lang_description: str) -> Lexer:
     lexer.add(TokenType.LPAREN, r'\(')
     lexer.add(TokenType.RPAREN, r'\)')
 
-    lexer.add(TokenType.INTEGER, r'\d+')
-    lexer.add(TokenType.ID, r'\w+')
-
     lexer.add(TokenType.ASSIGN, r':=')
 
     lexer.add(TokenType.BEGIN, r'{')
     lexer.add(TokenType.END, r'}')
     lexer.add(TokenType.SEMI, r';')
+    lexer.add(TokenType.DEF, r'function')
+
+    lexer.add(TokenType.INTEGER, r'\d+')
+    lexer.add(TokenType.ID, r'(\w|_)+')
 
     lexer.add(TokenType.EOF, r'$')
     return lexer
+
 
 if __name__ == '__main__':
     parser = create_parser()

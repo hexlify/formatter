@@ -1,7 +1,7 @@
 from frmty.lexing.token import Token
 
 __all__ = ['AST', 'BinOp', 'UnaryOp', 'Num',
-           'Compound', 'Assign', 'Var', 'NoOp']
+           'Compound', 'Assign', 'Var', 'NoOp', 'Function', 'Program']
 
 
 class AST:
@@ -30,6 +30,17 @@ class Num(AST):
 class Compound(AST):
     def __init__(self):
         self.children = []
+
+
+class Program(AST):
+    def __init__(self, functions):
+        self.children = functions
+
+
+class Function(AST):
+    def __init__(self, name: str, compound: Compound):
+        self.name = name
+        self.compound_statement = compound
 
 
 class Assign(AST):

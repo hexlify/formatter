@@ -55,15 +55,23 @@ class Parser:
             raise ParsingError
         self.eat()
 
-    def program(self):
+    def program(self) -> AST:
+        """program : function (function)*
         """
-        """
-        ...
+        results = [self.function()]
 
-    def function(self):
+        while self.current_token.type == TT.DEF:
+            results.append(self.function())
+
+        return Program(results)
+
+    def function(self) -> AST:
+        """function : DEF variable combound_statement
         """
-        """
-        ...
+        self.check_and_eat(TT.DEF)
+        name = self.variable().value
+        compound = self.compound_statement()
+        return Function(name, compound)
 
     def statement(self):
         """statement : compound_statement
@@ -174,7 +182,7 @@ class Parser:
 
         return node
 
-    def variable(self) -> AST:
+    def variable(self) -> Var:
         """variable : ID
         """
         node = Var(self.current_token)
@@ -182,7 +190,7 @@ class Parser:
         return node
 
     def parse(self) -> AST:
-        node = self.compound_statement()
+        node = self.program()
         if self.current_token.type != TT.EOF:
             raise ParsingError
 

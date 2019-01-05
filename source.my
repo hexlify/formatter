@@ -1,4 +1,11 @@
-{
-    count := 11111;
-    new_var := +2 * (count + (2 * 2  ) ^ 11) - -     1 * 230;
+function foo {   count := 11111;
+    new_var := +2 * (count + (2 * 2  ) ^ 11) - -     1 * 230;}
+
+function bar
+{}
+
+
+function hello_word {
+    abc := (1111111) + ((222))
+    ;
 }

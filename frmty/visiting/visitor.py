@@ -48,7 +48,15 @@ class Visitor(NodeVisitor):
         return str(node.value)
 
     def visit_Compound(self, node: Compound) -> str:
-        return '\n'.join(self.visit(c) for c in node.children)
+        inner = '\n\t'.join(self.visit(c) for c in node.children[:-1])
+        return '{\n\t' + inner + '\n}'
+
+    def visit_Program(self, node: Program) -> str:
+        return '\n\n'.join(self.visit(c) for c in node.children)
+
+    def visit_Function(self, node: Function) -> str:
+        return 'function {}\n'.format(node.name) \
+               + self.visit_Compound(node.compound_statement)
 
     def visit_Assign(self, node: Assign) -> str:
         left = self.visit(node.left)
