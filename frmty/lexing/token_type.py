@@ -17,4 +17,8 @@ class TokenType(Enum):
 
     ASSIGN = 9
 
+    BEGIN = 10,
+    END = 11,
+    SEMI = 12,
+
     EOF = 99

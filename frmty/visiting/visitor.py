@@ -8,7 +8,8 @@ precedencies = {
     TT.PLUS: 1,
     TT.MINUS: 1,
     TT.MUL: 2,
-    TT.DIV: 2
+    TT.DIV: 2,
+    TT.POW: 3
 }
 
 
@@ -45,6 +46,20 @@ class Visitor(NodeVisitor):
 
     def visit_Num(self, node: Num) -> str:
         return str(node.value)
+
+    def visit_Compound(self, node: Compound) -> str:
+        return '\n'.join(self.visit(c) for c in node.children)
+
+    def visit_Assign(self, node: Assign) -> str:
+        left = self.visit(node.left)
+        right = self.visit(node.right)
+        return '{} {} {}'.format(left, node.op.value, right)
+
+    def visit_Var(self, node: Var) -> str:
+        return node.value
+
+    def visit_NoOp(self, node: NoOp) -> str:
+        return ''
 
     def __need_parentheses(self, node: AST, current_op: BinOp):
         return (isinstance(node, BinOp) or

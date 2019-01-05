@@ -10,15 +10,24 @@ from frmty.visiting import Visitor
 def configure_lexer(lang_description: str) -> Lexer:
     lexer = Lexer()
     lexer.ignore(r'\s+')
+
     lexer.add(TokenType.PLUS, r'\+')
     lexer.add(TokenType.MINUS, r'-')
     lexer.add(TokenType.MUL, r'\*')
     lexer.add(TokenType.DIV, r'/')
+    lexer.add(TokenType.POW, r'\^')
     lexer.add(TokenType.LPAREN, r'\(')
     lexer.add(TokenType.RPAREN, r'\)')
+
     lexer.add(TokenType.INTEGER, r'\d+')
     lexer.add(TokenType.ID, r'\w+')
+
     lexer.add(TokenType.ASSIGN, r':=')
+
+    lexer.add(TokenType.BEGIN, r'{')
+    lexer.add(TokenType.END, r'}')
+    lexer.add(TokenType.SEMI, r';')
+
     lexer.add(TokenType.EOF, r'$')
     return lexer
 

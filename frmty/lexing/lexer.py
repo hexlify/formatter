@@ -55,7 +55,7 @@ class LexerStream:
                 self.index = match.end()
                 return token
 
-        raise LexingError()
+        raise LexingError
 
     def next_token(self) -> Token:
         return next(self)
