@@ -1,0 +1,26 @@
+# PLUS: plus sign
+# MINUS: minus sign
+# MUL: multiplication sign
+# DIV: division sign
+# POW: power sign
+# LPAREN: left parenthes
+# RPAREN: right parenthes
+# ASSIGN: assignment character
+# BEGIN: start of function/code block
+# END: end of function/code block
+# SEMI: end of line/statement
+# DEF: function definition
+
+
+PLUS +
+MINUS -
+MUL *
+DIV /
+POW ^
+LPAREN (
+RPAREN )
+ASSIGN :=
+BEGIN {
+END }
+SEMI ;
+DEF function

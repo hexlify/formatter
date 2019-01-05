@@ -1,40 +1,14 @@
 from os.path import isfile
 from sys import exit
 
-from frmty.arg_parser import create_parser
-from frmty.lexing import Lexer, TokenType
+from frmty import create_arg_parser, create_lexer, Config
+from frmty.lexing import Lexer
 from frmty.parsing import Parser
 from frmty.visiting import Visitor
 
 
-def configure_lexer(lang_description: str) -> Lexer:
-    lexer = Lexer()
-    lexer.ignore(r'\s+')
-
-    lexer.add(TokenType.PLUS, r'\+')
-    lexer.add(TokenType.MINUS, r'-')
-    lexer.add(TokenType.MUL, r'\*')
-    lexer.add(TokenType.DIV, r'/')
-    lexer.add(TokenType.POW, r'\^')
-    lexer.add(TokenType.LPAREN, r'\(')
-    lexer.add(TokenType.RPAREN, r'\)')
-
-    lexer.add(TokenType.ASSIGN, r':=')
-
-    lexer.add(TokenType.BEGIN, r'{')
-    lexer.add(TokenType.END, r'}')
-    lexer.add(TokenType.SEMI, r';')
-    lexer.add(TokenType.DEF, r'function')
-
-    lexer.add(TokenType.INTEGER, r'\d+')
-    lexer.add(TokenType.ID, r'(\w|_)+')
-
-    lexer.add(TokenType.EOF, r'$')
-    return lexer
-
-
 if __name__ == '__main__':
-    parser = create_parser()
+    parser = create_arg_parser()
     args = parser.parse_args()
 
     for path in (args.language, args.source):
@@ -43,9 +17,10 @@ if __name__ == '__main__':
             exit(1)
 
     with open(args.language) as lang, open(args.source) as src:
-        lexer = configure_lexer(lang.read())
+        config = Config.create(lang.read())
+        lexer = create_lexer(config)
         tokens = lexer.lex(src.read())
 
     ast = Parser(tokens).parse()
-    result = Visitor().visit(ast)
+    result = Visitor(config).visit(ast)
     print(result)

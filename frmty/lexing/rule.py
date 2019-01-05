@@ -11,3 +11,6 @@ class Rule:
 
     def matches(self, source: str, start: int) -> Optional[Match[str]]:
         return self.regex.match(source, start)
+
+    def __repr__(self):
+        return '{} {}'.format(str(self.token_type), self.regex.pattern)

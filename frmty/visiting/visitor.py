@@ -3,6 +3,8 @@ import typing as t
 from frmty.lexing import Token
 from frmty.lexing import TokenType as TT
 from frmty.parsing.ast import *
+from frmty import Config
+
 
 precedencies = {
     TT.PLUS: 1,
@@ -29,6 +31,9 @@ class NodeVisitor:
 
 
 class Visitor(NodeVisitor):
+    def __init__(self, config: Config):
+        self.config = config
+
     def visit_BinOp(self, node: BinOp) -> str:
         results = []  # type: t.List[str]
         for n in (node.left, node.right):
@@ -48,8 +53,14 @@ class Visitor(NodeVisitor):
         return str(node.value)
 
     def visit_Compound(self, node: Compound) -> str:
-        inner = '\n\t'.join(self.visit(c) for c in node.children[:-1])
-        return '{\n\t' + inner + '\n}'
+        res = self.config[TT.BEGIN] + '\n'
+        for c in node.children[:-1]:
+            res += '\t{}{}\n'.format(self.visit(c), self.config[TT.SEMI])
+        if len(node.children) == 1:
+            res += '\n'
+        res += self.config[TT.END] + '\n'
+
+        return res
 
     def visit_Program(self, node: Program) -> str:
         return '\n\n'.join(self.visit(c) for c in node.children)

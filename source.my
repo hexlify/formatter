@@ -1,8 +1,7 @@
 function foo {   count := 11111;
     new_var := +2 * (count + (2 * 2  ) ^ 11) - -     1 * 230;}
 
-function bar
-{}
+function bar{}
 
 
 function hello_word {
