@@ -1,13 +1,7 @@
-# Описание
+# Форматтер произвольного языка
 
 
-**Важно: пока что программа не позволяет задовать конфигурацию языка и поэтому
-некоторые элементы захардкожены. Будет исправлено в дальнейшем**
-
-Можно поменять настройки вот тут: `main.py::configure_lexer`
-
-
-# Язык
+## Язык
 
 ```
 program : function (function)*
@@ -42,18 +36,35 @@ factor : PLUS factor
 variable: ID
 ```
 
-# Принцип работы
+Язык настравивается через конфигурационный файл.
+
+```
+PLUS: plus sign
+MINUS: minus sign
+MUL: multiplication sign
+DIV: division sign
+POW: power sign
+LPAREN: left parenthes
+RPAREN: right parenthes
+ASSIGN: assignment character
+BEGIN: start of function/code block
+END: end of function/code block
+SEMI: end of line/statement
+DEF: function definition
+```
+
+Конфигурационный файл: `my.lang`. Файл с кодом: `source.my`
+
+## Принцип работы
 
 + `frmty.lexing` - разбивает код на токены
 + `frmty.parsing` - принимает на вход поток токенов и генерирует синтаксической дерево (AST)
 + `frmty.visiting` - обходит AST дерево и формирует соответствующий файл с кодом
 
-# Запуск
+## Запуск
 
 `python3.5+`
 
 ```
 $ python main.py <lang_description_file> <source_file>
 ```
-
-**! Пока что файл конфигурации языка не играет роли**
