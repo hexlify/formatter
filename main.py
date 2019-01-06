@@ -23,4 +23,8 @@ if __name__ == '__main__':
 
     ast = Parser(tokens).parse()
     result = Visitor(config).visit(ast)
-    print(result)
+    if args.output == '-':
+        print(result)
+    else:
+        with open(args.output, 'w') as f:
+            f.write(result)

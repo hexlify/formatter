@@ -66,5 +66,5 @@ DEF: function definition
 `python3.5+`
 
 ```
-$ python main.py <lang_description_file> <source_file>
+$ python main.py <lang_description_file> <source_file> <output_file|->
 ```

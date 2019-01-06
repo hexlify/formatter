@@ -39,7 +39,7 @@ class Visitor(NodeVisitor):
         for n in (node.left, node.right):
             n_str = self.visit(n)
             if self.__need_parentheses(n, node):
-                n_str = '(' + n_str + ')'
+                n_str = self.config[TT.LPAREN] + n_str + self.config[TT.RPAREN]
             results.append(n_str)
 
         return '{} {} {}'.format(results[0], node.op.value, results[1])
